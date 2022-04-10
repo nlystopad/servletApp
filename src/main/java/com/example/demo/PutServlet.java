@@ -25,7 +25,7 @@ public class PutServlet extends HttpServlet {
         employee.setCountry(request.getParameter("country"));
         employee.setPhoneNumber(request.getParameter("phone_number"));
         employee.setAge(Integer.parseInt(request.getParameter("age")));
-        employee.setMarried(Boolean.parseBoolean(request.getParameter("married")));
+        employee.setPosition(request.getParameter("position"));
 
         int status = EmployeeRepository.update(employee);
 

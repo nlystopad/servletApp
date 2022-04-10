@@ -41,13 +41,13 @@ public class EmployeeRepository {
         int status = 0;
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into users_test_married (name,email,country, phone_number, age, married) values (?,?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into users (name,email,country, phone_number, age, position) values (?,?,?,?,?,?)");
             ps.setString(1, employee.getName());
             ps.setString(2, employee.getEmail());
             ps.setString(3, employee.getCountry());
             ps.setString(4, employee.getPhoneNumber());
             ps.setInt(5, employee.getAge());
-            ps.setBoolean(6, employee.isMarried());
+            ps.setString(6, employee.getPosition());
 
             status = ps.executeUpdate();
             connection.close();
@@ -64,13 +64,13 @@ public class EmployeeRepository {
 
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("update users_test_married set name=?,email=?,country=?, phone_number=?, age=?, married=? where id=?");
+            PreparedStatement ps = connection.prepareStatement("update users set name=?,email=?,country=?, phone_number=?, age=?, position=? where id=?");
             ps.setString(1, employee.getName());
             ps.setString(2, employee.getEmail());
             ps.setString(3, employee.getCountry());
             ps.setString(4, employee.getPhoneNumber());
             ps.setInt(5, employee.getAge());
-            ps.setBoolean(6, employee.isMarried());
+            ps.setString(6, employee.getPosition());
             ps.setInt(7, employee.getId());
 
             status = ps.executeUpdate();
@@ -88,7 +88,7 @@ public class EmployeeRepository {
 
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("delete from users_test_married where id=?");
+            PreparedStatement ps = connection.prepareStatement("delete from users where id=?");
             ps.setInt(1, id);
             status = ps.executeUpdate();
 
@@ -106,7 +106,7 @@ public class EmployeeRepository {
 
         try {
             Connection connection = EmployeeRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("select * from users_test_married where id=?");
+            PreparedStatement ps = connection.prepareStatement("select * from users where id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -116,7 +116,7 @@ public class EmployeeRepository {
                 employee.setCountry(rs.getString(4));
                 employee.setPhoneNumber(rs.getString(5));
                 employee.setAge(rs.getInt(6));
-                employee.setMarried(rs.getBoolean(7));
+                employee.setPosition(rs.getString(7));
             }
             connection.close();
 
@@ -145,7 +145,7 @@ public class EmployeeRepository {
                 employee.setCountry(rs.getString(4));
                 employee.setPhoneNumber(rs.getString(5));
                 employee.setAge(rs.getInt(6));
-                employee.setMarried(rs.getBoolean(7));
+                employee.setPosition(rs.getString(7));
 
                 listEmployees.add(employee);
             }

@@ -25,7 +25,7 @@ public class SaveServlet extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         String sid = request.getParameter("age");
         int age = Integer.parseInt(sid);
-        boolean married =Boolean.parseBoolean(request.getParameter("married"));
+        String position = request.getParameter("position");
 
         Employee employee = new Employee();
 
@@ -34,7 +34,7 @@ public class SaveServlet extends HttpServlet {
         employee.setCountry(country);
         employee.setPhoneNumber(phoneNumber);
         employee.setAge(age);
-        employee.setMarried(married);
+        employee.setPosition(position);
 
         //out.println(employee.toString());
         //out.println(EmployeeRepository.getConnection());
