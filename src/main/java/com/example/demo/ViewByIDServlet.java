@@ -14,13 +14,16 @@ public class ViewByIDServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        if (EmployeeRepository.checkRequest(request)) {
+            String sid = request.getParameter("id");
+            int id = Integer.parseInt(sid);
 
-        String sid = request.getParameter("id");
-        int id = Integer.parseInt(sid);
+            Employee employee = EmployeeRepository.getEmployeeById(id);
 
-        Employee employee = EmployeeRepository.getEmployeeById(id);
-
-        out.print(employee);
+            out.print(employee);
+        } else {
+            out.println("Wrong parameters");
+        }
         out.close();
     }
 }

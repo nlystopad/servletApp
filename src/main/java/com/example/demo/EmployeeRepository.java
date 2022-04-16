@@ -1,8 +1,15 @@
 package com.example.demo;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EmployeeRepository {
 
@@ -155,5 +162,42 @@ public class EmployeeRepository {
             e.printStackTrace();
         }
         return listEmployees;
+    }
+
+
+    // technical methods
+    public static boolean checkEmployeeParameters(HttpServletRequest req, PrintWriter out) {
+        Enumeration<String> params = req.getParameterNames();
+        while (params.hasMoreElements()) {
+            String name = params.nextElement();
+            String value = req.getParameter(name);
+            if (name.equals("id") && Integer.parseInt(value) < 0) {
+                out.println("wrong id parameter");
+                return false;
+            }
+            Pattern phonePattern = Pattern.compile("\\d+");
+            if (name.equals("phoneNumber") && !phonePattern.matcher(value).find()) {
+                out.println("Wrong phone number");
+                return false;
+            }
+            Pattern emailPattern = Pattern.compile("[\\w\\.-]+@\\w+\\.\\w+");
+            if (name.equals("email") && !emailPattern.matcher(value).find()) {
+                out.println("Wrong email");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkRequest(HttpServletRequest req) {
+        String[] rightParams = new String[]{"id", "name", "country", "email", "phoneNumber", "age", "is_married"};
+        Enumeration<String> params = req.getParameterNames();
+        while (params.hasMoreElements()) {
+            String name = params.nextElement();
+            if (Arrays.stream(rightParams).noneMatch(name::equals)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

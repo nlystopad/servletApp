@@ -6,15 +6,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String sid = request.getParameter("id");
-        int id = Integer.parseInt(sid);
-        EmployeeRepository.delete(id);
-        response.sendRedirect("viewServlet");
+        PrintWriter out = response.getWriter();
+        if (EmployeeRepository.checkRequest(request)) {
+            String sid = request.getParameter("id");
+            int id = Integer.parseInt(sid);
+            EmployeeRepository.delete(id);
+            response.sendRedirect("viewServlet");
+        } else {
+            out.println("Wrong parameters");
+        }
     }
 }

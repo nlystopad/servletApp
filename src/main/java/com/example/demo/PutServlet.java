@@ -16,23 +16,26 @@ public class PutServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        if (EmployeeRepository.checkRequest(request)) {
 
+            Employee employee = new Employee();
+            employee.setId(Integer.parseInt(request.getParameter("id")));
+            employee.setName(request.getParameter("name"));
+            employee.setEmail(request.getParameter("email"));
+            employee.setCountry(request.getParameter("country"));
+            employee.setPhoneNumber(request.getParameter("phone_number"));
+            employee.setAge(Integer.parseInt(request.getParameter("age")));
+            employee.setMarried(Boolean.parseBoolean(request.getParameter("is_married")));
 
-        Employee employee = new Employee();
-        employee.setId(Integer.parseInt(request.getParameter("id")));
-        employee.setName(request.getParameter("name"));
-        employee.setEmail(request.getParameter("email"));
-        employee.setCountry(request.getParameter("country"));
-        employee.setPhoneNumber(request.getParameter("phone_number"));
-        employee.setAge(Integer.parseInt(request.getParameter("age")));
-        employee.setMarried(Boolean.parseBoolean(request.getParameter("is_married")));
+            int status = EmployeeRepository.update(employee);
 
-        int status = EmployeeRepository.update(employee);
-
-        if (status > 0) {
-            response.sendRedirect("viewServlet");
+            if (status > 0) {
+                response.sendRedirect("viewServlet");
+            } else {
+                out.println("Sorry! unable to update record");
+            }
         } else {
-            out.println("Sorry! unable to update record");
+            out.println("Wrong parameters");
         }
         out.close();
     }

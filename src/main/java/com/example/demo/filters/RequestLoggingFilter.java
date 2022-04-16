@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Enumeration;
+// todo: filter for 1 servlet (delete f.e.)
 
 /**
  * Servlet Filter implementation class RequestLoggingFilter

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 @WebServlet("/saveServlet")
 public class SaveServlet extends HttpServlet {
 
@@ -16,28 +17,31 @@ public class SaveServlet extends HttpServlet {
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-
         PrintWriter out = response.getWriter();
+        if (EmployeeRepository.checkRequest(request) && EmployeeRepository.checkEmployeeParameters(request, out)){
 
-        Employee employee = new Employee();
+            Employee employee = new Employee();
 
-        employee.setName(request.getParameter("name"));
-        employee.setEmail(request.getParameter("email"));
-        employee.setCountry(request.getParameter("country"));
-        employee.setPhoneNumber(request.getParameter("phoneNumber"));
-        employee.setAge(Integer.parseInt(request.getParameter("age")));
-        employee.setMarried(Boolean.parseBoolean(request.getParameter("is_married")));
+            employee.setName(request.getParameter("name"));
+            employee.setEmail(request.getParameter("email"));
+            employee.setCountry(request.getParameter("country"));
+            employee.setPhoneNumber(request.getParameter("phoneNumber"));
+            employee.setAge(Integer.parseInt(request.getParameter("age")));
+            employee.setMarried(Boolean.parseBoolean(request.getParameter("is_married")));
 
-        //out.println(employee.toString());
-        //out.println(EmployeeRepository.getConnection());
+            //out.println(employee.toString());
+            //out.println(EmployeeRepository.getConnection());
 
-        int status = EmployeeRepository.save(employee);
-        //out.println(status);
+            int status = EmployeeRepository.save(employee);
+            //out.println(status);
 
-        if (status > 0) {
-            out.print("Record saved successfully!");
+            if (status > 0) {
+                out.print("Record saved successfully!");
+            } else {
+                out.println("Sorry! unable to save record");
+            }
         } else {
-            out.println("Sorry! unable to save record");
+            out.println("Wrong parameters");
         }
         out.close();
     }
