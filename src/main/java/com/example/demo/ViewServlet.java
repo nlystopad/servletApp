@@ -16,14 +16,12 @@ public class ViewServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        if (EmployeeRepository.checkRequest(request)) {
+        if (EmployeeRepository.checkRequest(request, out) && EmployeeRepository.checkEmployeeParameters(request, out)) {
             List<Employee> list = EmployeeRepository.getAllEmployees();
 
             for (Employee employee : list) {
                 out.print(employee);
             }
-        } else {
-            out.println("Wrong parameters");
         }
         out.close();
     }

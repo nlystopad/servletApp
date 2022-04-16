@@ -1,14 +1,12 @@
 package com.example.demo;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EmployeeRepository {
@@ -189,12 +187,13 @@ public class EmployeeRepository {
         return true;
     }
 
-    public static boolean checkRequest(HttpServletRequest req) {
+    public static boolean checkRequest(HttpServletRequest req, PrintWriter out) {
         String[] rightParams = new String[]{"id", "name", "country", "email", "phoneNumber", "age", "is_married"};
         Enumeration<String> params = req.getParameterNames();
         while (params.hasMoreElements()) {
             String name = params.nextElement();
             if (Arrays.stream(rightParams).noneMatch(name::equals)) {
+                out.println("Wrong parameter :: " + name);
                 return false;
             }
         }

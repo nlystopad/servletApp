@@ -18,7 +18,7 @@ public class SaveServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        if (EmployeeRepository.checkRequest(request) && EmployeeRepository.checkEmployeeParameters(request, out)){
+        if (EmployeeRepository.checkRequest(request, out) && EmployeeRepository.checkEmployeeParameters(request, out)){
 
             Employee employee = new Employee();
 
@@ -40,8 +40,6 @@ public class SaveServlet extends HttpServlet {
             } else {
                 out.println("Sorry! unable to save record");
             }
-        } else {
-            out.println("Wrong parameters");
         }
         out.close();
     }

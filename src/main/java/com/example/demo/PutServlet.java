@@ -16,7 +16,7 @@ public class PutServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        if (EmployeeRepository.checkRequest(request)) {
+        if (EmployeeRepository.checkRequest(request, out) && EmployeeRepository.checkEmployeeParameters(request, out)) {
 
             Employee employee = new Employee();
             employee.setId(Integer.parseInt(request.getParameter("id")));
@@ -34,8 +34,6 @@ public class PutServlet extends HttpServlet {
             } else {
                 out.println("Sorry! unable to update record");
             }
-        } else {
-            out.println("Wrong parameters");
         }
         out.close();
     }
