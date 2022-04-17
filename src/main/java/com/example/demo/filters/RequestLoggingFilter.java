@@ -11,7 +11,7 @@ import java.util.Enumeration;
 /**
  * Servlet Filter implementation class RequestLoggingFilter
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = "/demo/*", description = "Filter all demo URLs", filterName = "generalFilter")
 public class RequestLoggingFilter implements Filter {
 
     private ServletContext context;

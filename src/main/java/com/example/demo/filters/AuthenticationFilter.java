@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter("/*")
+@WebFilter(servletNames = {"saveServlet", "viewByIDServlet", "viewServlet", "putServlet", "deleteServlet"})
 public class AuthenticationFilter implements Filter {
 
     private ServletContext context;
